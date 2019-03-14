@@ -3,12 +3,12 @@ package server
 import (
 	"errors"
 
-	"github.com/fireeye/gocrack/server/authentication"
-	"github.com/fireeye/gocrack/server/filemanager"
-	"github.com/fireeye/gocrack/server/notifications"
-	"github.com/fireeye/gocrack/server/rpc"
-	"github.com/fireeye/gocrack/server/storage"
-	"github.com/fireeye/gocrack/server/web"
+	"github.com/jjensn/gocrack/server/authentication"
+	"github.com/jjensn/gocrack/server/filemanager"
+	"github.com/jjensn/gocrack/server/notifications"
+	"github.com/jjensn/gocrack/server/rpc"
+	"github.com/jjensn/gocrack/server/storage"
+	"github.com/jjensn/gocrack/server/web"
 )
 
 // Config describes all the configuration values of the GoCrack server

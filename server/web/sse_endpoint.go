@@ -8,9 +8,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/fireeye/gocrack/server/authentication"
-	"github.com/fireeye/gocrack/server/storage"
-	"github.com/fireeye/gocrack/server/workmgr"
+	"github.com/jjensn/gocrack/server/authentication"
+	"github.com/jjensn/gocrack/server/storage"
+	"github.com/jjensn/gocrack/server/workmgr"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"

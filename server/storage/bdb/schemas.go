@@ -1,6 +1,6 @@
 package bdb
 
-import "github.com/fireeye/gocrack/server/storage"
+import "github.com/jjensn/gocrack/server/storage"
 
 const (
 	curCrackTaskVer      float32 = 1.1

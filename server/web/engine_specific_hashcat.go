@@ -3,7 +3,7 @@ package web
 import (
 	"net/http"
 
-	"github.com/fireeye/gocrack/shared"
+	"github.com/jjensn/gocrack/shared"
 
 	"github.com/gin-gonic/gin"
 )

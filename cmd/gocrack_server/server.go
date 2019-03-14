@@ -6,8 +6,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/fireeye/gocrack/server"
-	"github.com/fireeye/gocrack/shared"
+	"github.com/jjensn/gocrack/server"
+	"github.com/jjensn/gocrack/shared"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"

@@ -2,4 +2,4 @@
 
 package server
 
-import _ "github.com/fireeye/gocrack/server/authentication/database"
+import _ "github.com/jjensn/gocrack/server/authentication/database"

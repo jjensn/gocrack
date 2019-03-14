@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/fireeye/gocrack/opencl"
+	"github.com/jjensn/gocrack/opencl"
 )
 
 // Device describes an OpenCL device on a worker

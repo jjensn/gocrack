@@ -6,8 +6,8 @@ import (
 	"os"
 	"testing"
 
-	fakestor "github.com/fireeye/gocrack/server/filemanager/test"
-	"github.com/fireeye/gocrack/server/storage"
+	fakestor "github.com/jjensn/gocrack/server/filemanager/test"
+	"github.com/jjensn/gocrack/server/storage"
 
 	uuid "github.com/satori/go.uuid"
 	"github.com/stretchr/testify/assert"

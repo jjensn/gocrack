@@ -1,6 +1,6 @@
 package workmgr
 
-import "github.com/fireeye/gocrack/shared"
+import "github.com/jjensn/gocrack/shared"
 
 // Config defines all the configuration settings for the Work/Job Manager
 type Config struct {

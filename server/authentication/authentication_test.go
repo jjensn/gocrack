@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	test "github.com/fireeye/gocrack/server/authentication/test"
-	"github.com/fireeye/gocrack/server/storage"
-	"github.com/fireeye/gocrack/shared"
+	test "github.com/jjensn/gocrack/server/authentication/test"
+	"github.com/jjensn/gocrack/server/storage"
+	"github.com/jjensn/gocrack/shared"
 
 	"github.com/stretchr/testify/assert"
 )

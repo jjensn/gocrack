@@ -3,8 +3,8 @@ package web
 import (
 	"fmt"
 
-	"github.com/fireeye/gocrack/server/storage"
-	"github.com/fireeye/gocrack/shared"
+	"github.com/jjensn/gocrack/server/storage"
+	"github.com/jjensn/gocrack/shared"
 )
 
 func setEngineFile(stor storage.Backend, engineFileID string) *EngineFileItem {

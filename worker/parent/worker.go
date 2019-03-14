@@ -5,9 +5,9 @@ import (
 	"os"
 	"sync"
 
-	"github.com/fireeye/gocrack/server/rpc"
-	"github.com/fireeye/gocrack/shared"
-	"github.com/fireeye/gocrack/worker"
+	"github.com/jjensn/gocrack/server/rpc"
+	"github.com/jjensn/gocrack/shared"
+	"github.com/jjensn/gocrack/worker"
 
 	"github.com/rs/zerolog/log"
 )

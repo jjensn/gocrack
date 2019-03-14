@@ -1,6 +1,6 @@
 package worker
 
-import rpcclient "github.com/fireeye/gocrack/server/rpc/client"
+import rpcclient "github.com/jjensn/gocrack/server/rpc/client"
 
 var (
 	// CompileTime is when this was compiled

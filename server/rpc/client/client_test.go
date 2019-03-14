@@ -6,7 +6,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/fireeye/gocrack/shared/pool"
+	"github.com/jjensn/gocrack/shared/pool"
 
 	"github.com/stretchr/testify/assert"
 )

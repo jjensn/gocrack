@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/fireeye/gocrack/server/storage"
-	"github.com/fireeye/gocrack/shared"
+	"github.com/jjensn/gocrack/server/storage"
+	"github.com/jjensn/gocrack/shared"
 
 	"github.com/gin-gonic/gin"
 	uuid "github.com/satori/go.uuid"

@@ -1,6 +1,6 @@
 package test
 
-import "github.com/fireeye/gocrack/server/storage"
+import "github.com/jjensn/gocrack/server/storage"
 
 type FakeAuthPlugin struct {
 	db *FakeDatabase

@@ -10,12 +10,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/fireeye/gocrack/server/rpc"
-	"github.com/fireeye/gocrack/server/storage"
-	"github.com/fireeye/gocrack/shared"
-	"github.com/fireeye/gocrack/worker"
-	"github.com/fireeye/gocrack/worker/engines"
-	"github.com/fireeye/gocrack/worker/engines/hashcat"
+	"github.com/jjensn/gocrack/server/rpc"
+	"github.com/jjensn/gocrack/server/storage"
+	"github.com/jjensn/gocrack/shared"
+	"github.com/jjensn/gocrack/worker"
+	"github.com/jjensn/gocrack/worker/engines"
+	"github.com/jjensn/gocrack/worker/engines/hashcat"
 
 	"github.com/rs/zerolog/log"
 )

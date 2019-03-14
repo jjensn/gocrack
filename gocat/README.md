@@ -10,7 +10,7 @@ gocat requires hashcat [v3.6.0](https://github.com/hashcat/hashcat/releases) or 
 
 Installing the Go Library:
 
-    go get github.com/fireeye/gocrack/gocat
+    go get github.com/jjensn/gocrack/gocat
 
 ## Known Issues
 

@@ -10,7 +10,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/fireeye/gocrack/shared"
+	"github.com/jjensn/gocrack/shared"
 
 	"github.com/shirou/gopsutil/process"
 )

@@ -2,4 +2,4 @@
 
 package server
 
-import _ "github.com/fireeye/gocrack/server/storage/bdb"
+import _ "github.com/jjensn/gocrack/server/storage/bdb"

@@ -6,14 +6,14 @@ import (
 	"path/filepath"
 	"unsafe"
 
-	"github.com/fireeye/gocrack/gocat"
-	"github.com/fireeye/gocrack/gocat/hcargp"
-	"github.com/fireeye/gocrack/gocat/restoreutil"
-	"github.com/fireeye/gocrack/opencl"
-	"github.com/fireeye/gocrack/server/rpc"
-	"github.com/fireeye/gocrack/server/storage"
-	"github.com/fireeye/gocrack/shared"
-	"github.com/fireeye/gocrack/worker"
+	"github.com/jjensn/gocrack/gocat"
+	"github.com/jjensn/gocrack/gocat/hcargp"
+	"github.com/jjensn/gocrack/gocat/restoreutil"
+	"github.com/jjensn/gocrack/opencl"
+	"github.com/jjensn/gocrack/server/rpc"
+	"github.com/jjensn/gocrack/server/storage"
+	"github.com/jjensn/gocrack/shared"
+	"github.com/jjensn/gocrack/worker"
 
 	"github.com/rs/zerolog/log"
 )
