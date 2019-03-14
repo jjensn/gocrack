@@ -226,10 +226,6 @@ func callback(id uint32, hcCtx *C.hashcat_ctx_t, wrapper unsafe.Pointer, buf uns
 		if hcCtx.user_options.keyspace {
 			payload = logHashcatAction(id, fmt.Sprintf("Calculated Words Base: %d", hcCtx.status_ctx.words_base))
 		}
-	case C.EVENT_WEAK_HASH_PRE:
-		payload = logHashcatAction(id, "Checking for weak hashes")
-	case C.EVENT_WEAK_HASH_POST:
-		payload = logHashcatAction(id, "Checked for weak hashes")
 	case C.EVENT_HASHLIST_SORT_SALT_PRE:
 		payload = logHashcatAction(id, "Sorting salts...")
 	case C.EVENT_HASHLIST_SORT_SALT_POST:
@@ -283,12 +279,6 @@ func callback(id uint32, hcCtx *C.hashcat_ctx_t, wrapper unsafe.Pointer, buf uns
 		payload = FinalStatusPayload{
 			Status:  ctx.GetStatus(),
 			EndedAt: time.Now().UTC(),
-		}
-	case C.EVENT_WEAK_HASH_ALL_CRACKED:
-		payload = FinalStatusPayload{
-			Status:           nil,
-			EndedAt:          time.Now().UTC(),
-			AllHashesCracked: true,
 		}
 	}
 
