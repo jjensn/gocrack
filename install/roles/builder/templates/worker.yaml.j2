@@ -1,0 +1,24 @@
+---
+server:
+  # These settings should reflect those set in server.yaml under the `rpc_listener` section.
+  connect_to: "{{ gocrack.server }}:{{ gocrack.ports.rpc }}"
+  ssl_ca_certificate: |
+{{ gocrack.certs.ssl_ca_certificate | indent( width=4, indentfirst=True) }}
+  ssl_certificate: |
+{{ gocrack.certs.ssl_certificate | indent( width=4, indentfirst=True) }}
+  ssl_private_key: |
+{{ gocrack.certs.ssl_private_key | indent( width=4, indentfirst=True) }}
+  server_name: {{ ansible_hostname }}
+  ssl_enabled: true
+intervals:
+  beacon: 60s
+hashcat:
+  log_path: /opt/gocrack/.hashcat/logs
+  session_path: /opt/gocrack/.hashcat/sessions
+  shared_path: /opt/gocrack/share/hashcat
+# save_task_file_path is where task files (uncracked hashes) are saved during a task. They are removed when the task exits
+save_task_file_path: /opt/gocrack/files/task
+# save_engine_file_path is where dictionaries, mangling rules, etc are saved. They are cached on the worker and will remain until deleted.
+save_engine_file_path: /opt/gocrack/files/engine
+# engine_debug will export stdout/sterr from child processes (cracking tasks)
+engine_debug: true

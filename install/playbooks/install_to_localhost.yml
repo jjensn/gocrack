@@ -1,0 +1,11 @@
+---
+#=================================================
+# DO NOT FORGET TO EDIT THE GOCRACK VARS FILE
+# @ ../roles/builder/vars/gocrack.yml
+#=================================================
+
+- hosts: localhost
+  become: true
+
+  roles:
+    - '../roles/builder'

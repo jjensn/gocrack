@@ -3,3 +3,6 @@ builds/
 .vscode/
 configs/
 coverage.txt
+.DS_Store
+install/roles/**/molecule/default/tests/test_default.pyc
+install/roles/**/molecule/default/tests/__pycache__/test_default.cpython-27-PYTEST.pyc

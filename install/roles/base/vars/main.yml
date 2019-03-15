@@ -1,0 +1,42 @@
+---
+repos:
+  - 'deb https://nvidia.github.io/libnvidia-container/ubuntu16.04/amd64 /'
+  - 'deb https://nvidia.github.io/nvidia-container-runtime/ubuntu16.04/amd64 /'
+  - 'deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable'
+  - 'deb https://deb.nodesource.com/node_11.x xenial main'
+  - 'deb https://dl.yarnpkg.com/debian/ stable main'
+  - 'ppa:longsleep/golang-backports'
+
+required_packages:
+  - 'ca-certificates'
+  - 'curl'
+  - 'gnupg-agent'
+  - 'software-properties-common'
+  - 'apt-transport-https'
+  - 'git'
+  - 'python-pip'
+  - 'unzip'
+  - 'python-setuptools'
+  - 'logrotate'
+  - 'opencl-headers'
+  - 'ocl-icd-opencl-dev'
+
+custom_packages:
+  - 'nvidia-container-runtime'
+  - 'docker-ce'
+  - 'docker-ce-cli'
+  - 'containerd.io'
+  - 'golang-go'
+  - 'nodejs'
+  - 'yarn'
+
+repo_keys:
+  - 'nvidia.asc'
+  - 'docker.asc'
+
+pip_modules:
+  - 'pyopenssl'
+  - 'ndg-httpsclient'
+  - 'pyasn1'
+  - 'pexpect'
+  - 'docker'

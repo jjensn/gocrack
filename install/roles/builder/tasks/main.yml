@@ -1,0 +1,212 @@
+---
+# tasks file for builder
+- include_vars: 'gocrack.yml'
+
+- name: create build directories
+  file:
+    path: "/home/scratch/{{ item }}"
+    state: directory
+    recurse: true
+  with_items:
+    - 'hashcat'
+    - 'go'
+    - 'gocrack'
+    - 'containers/server/web/static/css'
+    - 'containers/server/web/static/img'
+    - 'containers/server/web/static/js'
+    - 'containers/worker'
+
+- name: clone hashcat repo
+  git:
+    repo: 'https://github.com/hashcat/hashcat.git'
+    dest: '/home/scratch/hashcat'
+    version: 'v5.1.0'
+    track_submodules: true
+    accept_hostkey: true
+    update: false
+    force: true
+  register: hashcat_repo
+
+- name: update hashcat's Makefile
+  replace:
+    path: '/home/scratch/hashcat/src/Makefile'
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+  with_items:
+    - { regexp: 'SHARED                  := 0', replace: 'SHARED                  := 1'}
+    - { regexp: 'USE_SYSTEM_OPENCL       := 0', replace: 'USE_SYSTEM_OPENCL       := 1'}
+
+- name: build hashcat
+  make:
+    chdir: /home/scratch/hashcat
+
+- name: install hashcat shared library
+  make:
+    chdir: /home/scratch/hashcat
+    target: install
+
+- name: symlink the shared library
+  file:
+    src: '/usr/local/lib/libhashcat.so.5.1.0'
+    dest: '/usr/lib/libhashcat.so'
+    state: link
+
+- name: copy the shared library to the container scratch dir
+  copy:
+    src: '/usr/local/lib/libhashcat.so.5.1.0'
+    dest: "/home/scratch/containers/{{ item }}/libhashcat.so.5.1.0"
+    remote_src: true
+  with_items:
+    - 'worker'
+    - 'server'
+
+- name: build a list of files in hashcats includes dir
+  find:
+    path: '/home/scratch/hashcat/include'
+    file_type: file
+  register: hashcat_include
+
+- name: create hashcat's include dir
+  file:
+    path: '/usr/local/include/hashcat'
+    state: directory
+
+- name: check if worker binary already exists
+  stat:
+    path: '/home/scratch/gocrack/builds/linux/amd64/gocrack_worker'
+  register: worker
+
+- name: check if server binary already exists
+  stat:
+    path: '/home/scratch/gocrack/builds/linux/amd64/gocrack_server'
+  register: server
+
+- name: copy the header files
+  copy:
+    src: "{{ item.path }}"
+    dest: "/usr/local/include/hashcat/{{ item.path | basename }}"
+    remote_src: true
+  with_items: "{{ hashcat_include.files }}"
+  when:
+    - worker.stat.exists == false or server.stat.exists == false or hashcat_repo.changed == true
+
+- name: clone gocrack
+  git:
+    repo: 'https://github.com/jjensn/gocrack.git'
+    dest: '/home/scratch/gocrack'
+    update: false
+    force: yes
+    track_submodules: true
+    accept_hostkey: true
+  register: gocrack_repo
+
+- name: get gocrack's dependencies
+  command: 'go get'
+  args:
+    chdir: "/home/scratch/gocrack/{{ item }}"
+  environment:
+    GOPATH: '/home/scratch/go'
+  with_items:
+    - 'server'
+    - 'worker'
+    - 'gocat'
+  when:
+    - worker.stat.exists == false or server.stat.exists == false or hashcat_repo.changed == true
+
+- name: build the binaries
+  make:
+    target: build
+    chdir: '/home/scratch/gocrack'
+  environment:
+    GOPATH: '/home/scratch/go'
+  when:
+    - worker.stat.exists == false or server.stat.exists == false
+
+- name: copy worker and slave binaries to their scratch dir
+  copy:
+    src: "/home/scratch/gocrack/builds/linux/amd64/gocrack_{{ item }}"
+    dest: "/home/scratch/containers/{{ item }}/gocrack_{{ item }}"
+    mode: 0755
+    owner: "{{ gocrack.uid }}"
+    group: "{{ gocrack.uid }}"
+    remote_src: true
+  with_items:
+    - 'worker'
+    - 'server'
+
+- name: copy worker and slave dockerfiles to their scratch dir
+  copy:
+    src: "Dockerfile.{{ item }}"
+    dest: "/home/scratch/containers/{{ item }}/Dockerfile"
+  with_items:
+    - 'worker'
+    - 'server'
+
+- name: copy the hashcat bin to the docker container dirs
+  copy:
+    src: '/usr/local/bin/hashcat'
+    dest: "/home/scratch/containers/{{ item }}/hashcat"
+    mode: 0755
+    remote_src: true
+  with_items:
+    - 'worker'
+    - 'server'
+
+- name: copy worker and slave startup scripts to their scratch dir
+  copy:
+    src: "{{ item }}_entrypoint.sh"
+    dest: "/home/scratch/containers/{{ item }}/{{ item }}_entrypoint.sh"
+    mode: 0755
+    owner: "{{ gocrack.uid }}"
+    group: "{{ gocrack.uid }}"
+  with_items:
+    - 'worker'
+    - 'server'
+
+- name: clone the ui
+  git:
+    repo: 'https://github.com/fireeye/gocrack-ui.git'
+    dest: '/home/gocrack/scratch/web'
+    version: '51a4f11'
+    track_submodules: true
+    accept_hostkey: true
+    update: false
+  register: ui_repo
+
+- name: compile the ui
+  shell: 'yarn && yarn run build'
+  args:
+    chdir: '/home/gocrack/scratch/web/'
+    creates: '/home/gocrack/scratch/web/dist/index.html'
+
+- name: save the build artifacts as facts
+  find:
+    path: '/home/gocrack/scratch/web/dist'
+    recurse: yes
+  register: artifacts
+
+- name: copy the ui artifacts to the web directory
+  copy:
+    src: "{{ item.path }}"
+    dest: "/home/scratch/containers/server/web/{{ item.path | replace('/home/gocrack/scratch/web/dist/', '') }}"
+    owner: "{{ gocrack.uid }}"
+    group: "{{ gocrack.uid }}"
+    remote_src: true
+  with_items: "{{ artifacts.files }}"
+
+- name: template the worker config
+  template:
+    src: 'worker.yaml.j2'
+    dest: '/home/scratch/containers/worker/config.yaml'
+    owner: "{{ gocrack.uid }}"
+    group: "{{ gocrack.uid }}"
+
+- name: build the docker images
+  docker_image:
+    path: "/home/scratch/containers/{{ item }}"
+    name: "{{ item }}"
+    tag: 'latest'
+    push: false   # change to true and tag the image appropriately to push to your private docker repo
+  with_items:
+    - 'worker'
+    - 'server'

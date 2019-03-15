@@ -1,0 +1,23 @@
+---
+# gocrack specific vars
+gocrack:
+  server: '10.10.10.10'
+  ports:
+    rpc: '1339'
+  certs:
+    ssl_private_key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      ABC
+      -----END RSA PRIVATE KEY-----
+
+    ssl_ca_certificate: |
+      -----BEGIN CERTIFICATE-----
+      ABC
+      -----END CERTIFICATE-----
+
+    ssl_certificate: |
+      -----BEGIN CERTIFICATE-----
+      ABC
+      -----END CERTIFICATE-----
+
+  uid: '1337'

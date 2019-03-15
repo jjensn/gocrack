@@ -1,0 +1,18 @@
+FROM nvidia/opencl:runtime-ubuntu16.04
+
+ARG USER_ID
+ARG AUTHOR
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        ocl-icd-opencl-dev && \
+    rm -rf /var/lib/apt/lists/*
+    
+ADD gocrack_server /usr/local/bin/gocrack_server
+ADD libhashcat.so.5.1.0 /usr/lib
+ADD server_entrypoint.sh /usr/local/bin/entrypoint.sh
+ADD hashcat /usr/local/bin/hashcat
+COPY web /opt/gocrack/web/
+WORKDIR /usr/local/share/hashcat
+ADD . ./
+
+ENTRYPOINT [ "bash", "/usr/local/bin/entrypoint.sh" ]
